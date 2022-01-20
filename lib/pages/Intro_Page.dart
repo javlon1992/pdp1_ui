@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pdp1_ui/pages/home_page.dart';
 
 class IntroPage extends StatefulWidget {
   static String id="intro_page";
@@ -9,30 +10,17 @@ class IntroPage extends StatefulWidget {
 }
 
 class _IntroPageState extends State<IntroPage> {
+
   int _selectedIndex=0;
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
-       appBar: AppBar(
-         elevation: 0,
-         backgroundColor: Colors.transparent,
-         actions: [
-           Center(
-             child: Text("Skip",style: TextStyle(color: Colors.green),),
-           ),
-           SizedBox(width: 20,),
-         ],
-       ),
+      backgroundColor: Colors.white,
+
       body: Stack(
         children: [
-          // Center(
-          //   child: Container(
-          //     height: 200,
-          //       width: 200,
-          //       child: Image.asset("assets/images/image_${_selectedIndex+1}.png")),
-          // ),
             PageView.builder(
               onPageChanged: (index) {
                 setState(() {
@@ -45,14 +33,14 @@ class _IntroPageState extends State<IntroPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                  Container(
-                      height: 200,
-                        width: 200,
-                        child: Image.asset("assets/images/image_${_selectedIndex+1}.png")),
                      SizedBox(height: 20,),
-                     Text("${Texts.textTitle[index]}",style: TextStyle(fontSize: 30,color: Colors.green),),
+                     Text("${Texts.textTitle[index]}",style: TextStyle(fontSize: 30,color: Colors.red),),
                      SizedBox(height: 20,),
-                     Text("${Texts.textContent[index]}",style: TextStyle(color: Colors.grey)),
+                     Text("${Texts.textContent[index]}",textAlign: TextAlign.center,style: TextStyle(color: Colors.grey)),
+                      Container(
+                          height: 200,
+                          width: 200,
+                          child: Image.asset("assets/images/image_${_selectedIndex+1}.png")),
                     ],
                   );
                 }
@@ -69,13 +57,20 @@ class _IntroPageState extends State<IntroPage> {
                     duration: Duration(milliseconds: 400),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(3),
-                      color: _selectedIndex == index ? Colors.green : Colors.grey,
+                      color: _selectedIndex == index ? Colors.red : Colors.grey,
                     ),
                   )
               ),
             ),
           ),
-        ],
+         Align(
+            alignment: Alignment(0.85,0.95),
+           child: IconButton(onPressed: () {
+                   _selectedIndex==2 ? Navigator.of(context).pushNamed(HomePage.id):{};
+           },
+           icon: Text(_selectedIndex==2 ? "Skip":"",style: TextStyle(color: Colors.red),)),
+         ),
+         ],
       ),
     );
   }
