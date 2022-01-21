@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:pdp1_ui/pages/Intro_Page.dart';
 import 'package:pdp1_ui/pages/app_bar.dart';
 import 'package:pdp1_ui/pages/apple_products.dart';
+import 'package:pdp1_ui/pages/car_task.dart';
 import 'package:pdp1_ui/pages/home_page.dart';
+import 'package:pdp1_ui/pages/task_ui.dart';
 import 'boshqa_rang.dart';
 
 void main() {
@@ -21,13 +23,15 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const IntroPage(),
+      home: const CarTask(),
       routes: {
         HomePage.id:(context)=>const HomePage(),
         BoshqaRang.id:(context)=>const BoshqaRang(),
         AppBarr.id:(context)=>const AppBarr(),
         ApplePage.id:(context)=>const ApplePage(),
         IntroPage.id:(context)=>const IntroPage(),
+        TaskUi.id:(context)=>const TaskUi(),
+        CarTask.id:(context)=>const CarTask(),
       },
     );
   }
