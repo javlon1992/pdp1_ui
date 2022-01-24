@@ -10,38 +10,94 @@ class CarTask extends StatefulWidget {
 
 class _CarTaskState extends State<CarTask> {
   List<String> categories =["All","Red","Blue","Yellow","White","Green"];
+  late List<Car> cars = List.generate(10, (index) => Car(image: "assets/images/im_car${index % 5}.jpg", color: categories[(index%5)+1],));
 
-  List<Car> list= [ Car(color: "Red",image: 'asset/images/im_car0.jpg'),
-               Car(color: "Blue",image: 'asset/images/im_car1.jpg'),
-               Car(color: "Yellow",image: 'asset/images/im_car2.jpg'),
-               Car(color: "White",image: 'asset/images/im_car3.jpg'),
-               Car(color: "Green",image: 'asset/images/im_car4.jpg'),];
-
-  String sort="All";
+  List<Car>list=[], shoppinglist=[], likes=[];
   bool isItemSelected=false;
-  int selectedIndex=0,_count=0;
-  List likes =[];
-  List shopping =[];
+  int selectedIndex=0,_count=0,selected=0;
 
+  GlobalKey<RefreshIndicatorState> _key = GlobalKey<RefreshIndicatorState>();
+
+  // Future<Null> refreshlist()async{
+  //   await Future.delayed(Duration(seconds: 1));
+  //   setState(() {selectedIndex=0; list.clear(); list.addAll(cars);});
+  //   return null;
+  // }
+
+@override
+  void initState() {
+    super.initState();
+    list.addAll(cars);
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
          backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text("Cars",style: TextStyle(color: Colors.red,fontSize: 27),),
+        title: Text(selected==0?"Cars":selected==1?"Likes":"Shopping",style: TextStyle(color: Colors.black,fontSize: 27),),
         elevation: 0,
         backgroundColor: Colors.transparent,
         actions: [
+          /// #delete icon
+          isItemSelected ? IconButton(
+              onPressed: (){
+                setState(() { _count=0; isItemSelected=false;
+                  for (var element in cars) {
+                  if(element.isSelected.isNotEmpty) {
+                    list.remove(element);
+                    if(selected==1){element.likes=false;likes.remove(element);}
+                    if(selected==2){shoppinglist.remove(element);}
+                    element.isSelected="";}}
+                });
+              },
+              icon: Icon(Icons.delete_forever,color: Colors.black,)):SizedBox.shrink(),
+           /// #favorite icon
           IconButton(
-              onPressed: (){},
-              icon: Icon(Icons.notifications,color: Colors.red,)),
-          IconButton(
-              onPressed: (){},
-              icon: Icon(Icons.shopping_cart_rounded,color: Colors.red,))
+                  onPressed: (){selected=1; list.clear(); list.addAll(likes); setState(() {});},
+                  icon: Icon(likes.isEmpty? Icons.favorite_border_rounded :Icons.favorite,color: Colors.black,)),
+          /// #shopping icon
+          Stack(
+            children: [
+              IconButton(
+                  onPressed: (){
+                    if(isItemSelected){
+                    shoppinglist=list.where((element) => element.isSelected.isNotEmpty).toList();
+                    for (var element in list) {element.isSelected="";}
+                    isItemSelected=false;
+                    }else{
+                    list.clear();
+                    list.addAll(shoppinglist);}
+                   setState(() {_count=0;selected=2;});
+                  },
+                  icon: Icon(isItemSelected ? Icons.add_shopping_cart_outlined :Icons.shopping_cart_rounded,color: Colors.black,)),
+            Positioned(top: 0,right: 0,
+                child: Padding(
+                  padding: const EdgeInsets.all(3),
+                  child: _count!=0? CircleAvatar(
+                    minRadius: 8,
+                    backgroundColor: Colors.red,
+                      child: Text("$_count",style: TextStyle(fontSize: 13,color: Colors.white),)):SizedBox.shrink(),
+                ))
+            ],
+          )
         ],
       ),
-      body: SingleChildScrollView(
+      /// #refreshindicator
+      body: RefreshIndicator(
+        key: _key,
+        onRefresh: () async{
+          await Future.delayed(Duration(seconds: 1));
+          setState(() {
+            selectedIndex=0; list.clear();
+          if(selected==0)list.addAll(cars);
+          if(selected==1)list.addAll(likes);
+          if(selected==2)list.addAll(shoppinglist);
+          });
+          //await refreshlist();
+        },
+          /// #body
+      child: SingleChildScrollView(
         child: Column(
           children: [
             /// #categories
@@ -52,32 +108,37 @@ class _CarTaskState extends State<CarTask> {
                 itemCount: categories.length,
                 itemBuilder: (context,index) {
                   return Container(
-                    padding: EdgeInsets.symmetric(horizontal: 5),
+                    padding: EdgeInsets.all(5),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
 
                     ),
                     child: MaterialButton(
-                      elevation: 0,
-                      color: selectedIndex==index ? Colors.red.shade300: Colors.white,
-                      shape: StadiumBorder(),
-                      onPressed: () {
-                      setState(() {
-                        selectedIndex = index;
-                      });
-                    },
-                    child: Text(categories[index],style: TextStyle(fontSize: 18,color: selectedIndex==index ? Colors.white: Colors.black,),)),
+                        elevation: 0,
+                        color: selectedIndex==index ? Colors.grey.shade400: Colors.white,
+                        shape: StadiumBorder(),
+                        onPressed: () {
+                          list.clear(); selected=0; list.addAll(cars);
+                          setState(() {
+                            selectedIndex = index;
+                          });
+                          for(var i=0;i<list.length;i++){
+                            if(list[i].color==categories[index]){
+                              list.insert(0,list[i]);
+                              list.removeAt(i+1);
+                            }}
+                        },
+                        child: Text(categories[index],style: TextStyle(fontSize: 18,color: selectedIndex==index ? Colors.white: Colors.black,),)),
                   );
                 },
               ),
             ),
 
-
-            /// #products
+            /// #cars
             GridView.builder(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
-                itemCount: 5,
+                itemCount: list.length,
                 padding: const EdgeInsets.all(20),
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   childAspectRatio: 1.5,
@@ -85,31 +146,31 @@ class _CarTaskState extends State<CarTask> {
                   mainAxisSpacing: 10,
                   crossAxisSpacing: 10,
                 ),
-                /// #Grid Tile
+                /// #grid tile
                 itemBuilder: (context,index){
                   return _buildGridTile(index);
                 }
             ),
           ],
         ),
-      ),
+      )),
     );
   }
   GridTile _buildGridTile(int index) {
     return GridTile(
+      /// #gridtile image and isSelected
       child: GestureDetector(
         onTap: isItemSelected ? () {
-          list[index].isSelected = !list[index].isSelected;
+
           setState(() {
-            list[index].isSelected ? _count++ : _count--;
+            list[index].isSelected.isEmpty ? list[index].isSelected=index.toString() : list[index].isSelected="";
+            list[index].isSelected == index.toString() ? _count++ : _count--;
           });
-          if (_count == 0) {
-            isItemSelected = false;
-          }
+          if (_count == 0) {isItemSelected = false;}
         } : () {},
         onLongPress: !isItemSelected ? () {
           setState(() {
-            list[index].isSelected = true;
+            list[index].isSelected = index.toString();
             _count++;
             isItemSelected = true;
           });
@@ -119,53 +180,58 @@ class _CarTaskState extends State<CarTask> {
               borderRadius: BorderRadius.circular(18),
               image: DecorationImage(
                 fit: BoxFit.cover,
-                image: AssetImage("assets/images/im_car${index % 5}.jpg"),
+                image: AssetImage(list[index].image),    //"assets/images/im_car${index % 5}.jpg"
               )
           ),
           child: Container(
             decoration: BoxDecoration(
-              color: list[index].isSelected ? Colors.blue.withOpacity(0.45) : Colors.transparent,
+              color: list[index].isSelected==index.toString() ? Colors.blue.withOpacity(0.45) : Colors.transparent,
               borderRadius: BorderRadius.circular(18),
             ),
           ),
         ),
       ),
+      /// #header gridtilebar
       header: GridTileBar(
         backgroundColor: Colors.transparent,
-        subtitle: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Text("${list[index].name}",style: TextStyle(fontSize: 20),),
-            SizedBox(width: 10,),
-            Text("${list[index].type}",style: TextStyle(fontSize:20,color: Colors.red),),
-          ],
-        ),
+        title: RichText(
+            text: TextSpan(text: "${list[index].name} ", style: TextStyle(fontSize: 20),
+              children: [
+                TextSpan(text: "${list[index].type}", style: TextStyle(color: Colors.red),),
+              ]
+            )),
+        trailing: isItemSelected ? Icon(list[index].isSelected==index.toString()?Icons.done:Icons.add)
+            :IconButton(
+            onPressed: () {
+              setState(() {shoppinglist.add(list[index]);_count++;});
+             },
+            icon: Icon(Icons.add_shopping_cart_outlined )),
       ),
+      /// #footer gridtilebar
       footer: GridTileBar(
         backgroundColor: Colors.transparent,
         //subtitle: Text(""),
         leading: IconButton(
-          onPressed: () {
-            setState(() {
-              list[index].likes = !list[index].likes;
-              // list[index].likes ? _count++ : _count--;
-            });
-          },
-          icon: Icon(list[index].likes ? Icons.favorite:Icons.favorite_border_rounded,
-            size: 25, color: Colors.red,),),
-        // Icon(Icons.favorite, size: 25, color: Colors.red,),
+              onPressed: () {
+                setState(() {
+                  list[index].likes = !list[index].likes;
+                });
+                list[index].likes ? likes.add(list[index]) : likes.remove(list[index]);
+              },
+              icon: Icon(list[index].likes ? Icons.favorite:Icons.favorite_border_rounded,
+                size: 25, color: Colors.red,),),
       ),
     );
   }
 }
 
 class Car{
-  String name="PDP Car";
+  String name="Car";
   String type="Electric";
   String cost="100\$";
   String color;
   String image;
   bool likes=false;
-  bool isSelected=false;
+  String isSelected="";
   Car({required this.color,required this.image});
 }
