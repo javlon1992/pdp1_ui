@@ -4,6 +4,7 @@ import 'package:pdp1_ui/pages/app_bar.dart';
 import 'package:pdp1_ui/pages/apple_products.dart';
 import 'package:pdp1_ui/pages/car_task.dart';
 import 'package:pdp1_ui/pages/home_page.dart';
+import 'package:pdp1_ui/pages/hotel_task.dart';
 import 'package:pdp1_ui/pages/task_ui.dart';
 import 'boshqa_rang.dart';
 
@@ -23,7 +24,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const CarTask(),
+      home: const HotelPage(),
       routes: {
         HomePage.id:(context)=>const HomePage(),
         BoshqaRang.id:(context)=>const BoshqaRang(),
@@ -32,6 +33,7 @@ class MyApp extends StatelessWidget {
         IntroPage.id:(context)=>const IntroPage(),
         TaskUi.id:(context)=>const TaskUi(),
         CarTask.id:(context)=>const CarTask(),
+        HotelPage.id:(contex)=>const HotelPage(),
       },
     );
   }
