@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const AmazonUi(),
+      home: const PartyPage(),
       routes: {
         HomePage.id:(context)=>const HomePage(),
         BoshqaRang.id:(context)=>const BoshqaRang(),

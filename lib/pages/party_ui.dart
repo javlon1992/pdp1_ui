@@ -60,21 +60,22 @@ class _PartyPageState extends State<PartyPage> with SingleTickerProviderStateMix
                 ),
               ),
               child: Container(
-                margin: EdgeInsets.only(top: MediaQuery.of(context).size.height*0.45),
+                margin: EdgeInsets.only(top: MediaQuery.of(context).size.height*0.15),
                 padding: EdgeInsets.all(30),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     FadeAnimation(4, Text("Find the best parties near you.",
-                        style: TextStyle(fontSize:35,color: Colors.white,fontWeight: FontWeight.bold),),
+                        style: TextStyle(fontSize:35,color: Colors.yellow,fontWeight: FontWeight.bold),),
                     ),
                     SizedBox(height: 25,),
-                    FadeAnimation(5, Text("Let us find you a party for you interesrt",style: TextStyle(fontSize: 20,color: Colors.grey),)),
+                    FadeAnimation(5, Text("Let us find you a party for \nyou interesrt",style: TextStyle(fontSize: 25,color: Colors.teal),)),
                     Spacer(),
-                    FadeAnimation(6,
+                    FadeAnimation(6,buttonChange?
                        TextButton(
                         style: TextButton.styleFrom(
-                            backgroundColor: buttonChange ? Colors.orange: Colors.redAccent,
+                            backgroundColor:Colors.orange,
                             shape: StadiumBorder(),
                             fixedSize: Size(MediaQuery.of(context).size.width, 50)
                         ),
@@ -83,9 +84,29 @@ class _PartyPageState extends State<PartyPage> with SingleTickerProviderStateMix
                             buttonChange = !buttonChange;
                           });
                           },
-                        child: Text(buttonChange ? "Start":"Google+",
-                          style: TextStyle(fontSize: 20,color: Colors.white),),),
-                    )
+                        child: Text("Start", style: TextStyle(fontSize: 20,color: Colors.white),))
+                         : Row(
+                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            TextButton(
+                             style: TextButton.styleFrom(
+                             backgroundColor: Colors.redAccent,
+                             shape: StadiumBorder(),
+                             fixedSize: Size(MediaQuery.of(context).size.width*0.4, 50)
+                             ),
+                            onPressed: (){},
+                                child: Text("Google", style: TextStyle(fontSize: 20,color: Colors.white),)),
+                           TextButton(
+                             style: TextButton.styleFrom(
+                               backgroundColor: Colors.blue,
+                               shape: StadiumBorder(),
+                               fixedSize: Size(MediaQuery.of(context).size.width*0.4, 50)
+                             ),
+                             onPressed: (){},
+                             child: Text("Facebook", style: TextStyle(fontSize: 20,color: Colors.white),)),
+                          ],
+                        ),
+                    ),
                   ],
                 ),
               ),
