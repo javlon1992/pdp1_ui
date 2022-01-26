@@ -11,7 +11,7 @@ class GetStartedPage extends StatefulWidget {
 }
 
 class _GetStartedPageState extends State<GetStartedPage> {
-  TextEditingController _controller = TextEditingController();
+  final TextEditingController _controller = TextEditingController();
   bool isObscure = true;
 
   void _signin() {
@@ -21,7 +21,7 @@ class _GetStartedPageState extends State<GetStartedPage> {
         isScrollControlled: true,
         context: context,
         builder: (context) {
-          return SignInPage();
+          return const SignInPage();
         });
   }
 
@@ -82,7 +82,7 @@ class _GetStartedPageState extends State<GetStartedPage> {
                 child: TextField(
                   controller: _controller,
                   decoration: InputDecoration(
-                      contentPadding: EdgeInsets.symmetric(horizontal: 15),
+                      contentPadding: const EdgeInsets.symmetric(horizontal: 15),
                       suffixIcon: Icon(Icons.check_circle_outline, color: RegExp(r'^([a-zA-z\d\.\-\_]+)@[a-z]+\.[a-z]+(\.[a-z]+)?$')
                           .hasMatch(_controller.text)?Colors.green:Colors.grey,),
                       border: const OutlineInputBorder()
@@ -104,13 +104,13 @@ class _GetStartedPageState extends State<GetStartedPage> {
                 child: TextField(
                   obscureText: isObscure,
                   decoration: InputDecoration(
-                      contentPadding: EdgeInsets.symmetric(horizontal: 15),
+                      contentPadding: const EdgeInsets.symmetric(horizontal: 15),
                       suffixIcon: IconButton(onPressed: (){
                         setState(() {
                           isObscure = !isObscure;
                         });
                       }, icon: Icon(isObscure?Icons.visibility:Icons.visibility_off),),
-                      border: OutlineInputBorder(
+                      border: const OutlineInputBorder(
                       )
                   ),
                 ),
@@ -128,9 +128,9 @@ class _GetStartedPageState extends State<GetStartedPage> {
                 color: Colors.green,
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(15)),
-                child: Text(
+                child: const Text(
                   "Get Started",
-                  style: const TextStyle(
+                  style: TextStyle(
                       color: Colors.white,
                       fontSize: 18,
                       fontWeight: FontWeight.w600),
@@ -144,7 +144,7 @@ class _GetStartedPageState extends State<GetStartedPage> {
               MaterialButton(onPressed: (){
                 Navigator.pop(context);
                 _signin();
-              }, child: Text("Already have an account? Login", style: TextStyle(color: Colors.grey, fontSize: 15),),)
+              }, child: const Text("Already have an account? Login", style: TextStyle(color: Colors.grey, fontSize: 15),),)
             ],
           ),
         ),

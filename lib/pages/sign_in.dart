@@ -10,7 +10,7 @@ class SignInPage extends StatefulWidget {
 }
 
 class _SignInPageState extends State<SignInPage> {
-  TextEditingController _controller = TextEditingController();
+  final TextEditingController _controller = TextEditingController();
   bool isObscure = true;
 
   void _getStarted() {
@@ -20,7 +20,7 @@ class _SignInPageState extends State<SignInPage> {
         isScrollControlled: true,
         context: context,
         builder: (context) {
-          return GetStartedPage();
+          return const GetStartedPage();
         });
   }
 
@@ -66,7 +66,7 @@ class _SignInPageState extends State<SignInPage> {
               child: TextField(
                 controller: _controller,
                 decoration: InputDecoration(
-                    contentPadding: EdgeInsets.symmetric(horizontal: 15),
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 15),
                     suffixIcon: Icon(Icons.check_circle_outline, color: RegExp(r'^([a-zA-z\d\.\-\_]+)@[a-z]+\.[a-z]+(\.[a-z]+)?$')
                         .hasMatch(_controller.text)?Colors.green:Colors.grey,),
                     border: const OutlineInputBorder()
@@ -88,13 +88,13 @@ class _SignInPageState extends State<SignInPage> {
               child: TextField(
                 obscureText: isObscure,
                 decoration: InputDecoration(
-                    contentPadding: EdgeInsets.symmetric(horizontal: 15),
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 15),
                     suffixIcon: IconButton(onPressed: (){
                       setState(() {
                         isObscure = !isObscure;
                       });
                     }, icon: Icon(isObscure?Icons.visibility:Icons.visibility_off),),
-                    border: OutlineInputBorder(
+                    border: const OutlineInputBorder(
                     )
                 ),
               ),
@@ -111,9 +111,9 @@ class _SignInPageState extends State<SignInPage> {
               color: Colors.grey.shade700,
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(15)),
-              child: Text(
+              child: const Text(
                 "Sign in",
-                style: const TextStyle(
+                style: TextStyle(
                     color: Colors.white,
                     fontSize: 18,
                     fontWeight: FontWeight.w600),
@@ -127,7 +127,7 @@ class _SignInPageState extends State<SignInPage> {
             MaterialButton(onPressed: (){
               Navigator.pop(context);
               _getStarted();
-            }, child: Text("Don't you have an account? Sign up", style: TextStyle(color: Colors.grey, fontSize: 15),),)
+            }, child: const Text("Don't you have an account? Sign up", style: TextStyle(color: Colors.grey, fontSize: 15),),)
           ],
         ),
       ),

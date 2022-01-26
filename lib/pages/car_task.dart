@@ -16,7 +16,7 @@ class _CarTaskState extends State<CarTask> {
   bool isItemSelected=false;
   int selectedIndex=0,_count=0,selected=0;
 
-  GlobalKey<RefreshIndicatorState> _key = GlobalKey<RefreshIndicatorState>();
+  final GlobalKey<RefreshIndicatorState> _key = GlobalKey<RefreshIndicatorState>();
 
   // Future<Null> refreshlist()async{
   //   await Future.delayed(Duration(seconds: 1));
@@ -35,7 +35,7 @@ class _CarTaskState extends State<CarTask> {
     return Scaffold(
          backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text(selected==0?"Cars":selected==1?"Likes":"Shopping",style: TextStyle(color: Colors.black,fontSize: 27),),
+        title: Text(selected==0?"Cars":selected==1?"Likes":"Shopping",style: const TextStyle(color: Colors.black,fontSize: 27),),
         elevation: 0,
         backgroundColor: Colors.transparent,
         actions: [
@@ -51,7 +51,7 @@ class _CarTaskState extends State<CarTask> {
                     element.isSelected="";}}
                 });
               },
-              icon: Icon(Icons.delete_forever,color: Colors.black,)):SizedBox.shrink(),
+              icon: const Icon(Icons.delete_forever,color: Colors.black,)):const SizedBox.shrink(),
            /// #favorite icon
           IconButton(
                   onPressed: (){selected=1; list.clear(); list.addAll(likes); setState(() {});},
@@ -77,7 +77,7 @@ class _CarTaskState extends State<CarTask> {
                   child: _count!=0? CircleAvatar(
                     minRadius: 8,
                     backgroundColor: Colors.red,
-                      child: Text("$_count",style: TextStyle(fontSize: 13,color: Colors.white),)):SizedBox.shrink(),
+                      child: Text("$_count",style: const TextStyle(fontSize: 13,color: Colors.white),)):const SizedBox.shrink(),
                 ))
             ],
           )
@@ -87,7 +87,7 @@ class _CarTaskState extends State<CarTask> {
       body: RefreshIndicator(
         key: _key,
         onRefresh: () async{
-          await Future.delayed(Duration(seconds: 1));
+          await Future.delayed(const Duration(seconds: 1));
           setState(() {
             selectedIndex=0; list.clear();
           if(selected==0)list.addAll(cars);
@@ -101,14 +101,14 @@ class _CarTaskState extends State<CarTask> {
         child: Column(
           children: [
             /// #categories
-            Container(
+            SizedBox(
               height: 50,
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
                 itemCount: categories.length,
                 itemBuilder: (context,index) {
                   return Container(
-                    padding: EdgeInsets.all(5),
+                    padding: const EdgeInsets.all(5),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
 
@@ -116,7 +116,7 @@ class _CarTaskState extends State<CarTask> {
                     child: MaterialButton(
                         elevation: 0,
                         color: selectedIndex==index ? Colors.grey.shade400: Colors.white,
-                        shape: StadiumBorder(),
+                        shape: const StadiumBorder(),
                         onPressed: () {
                           list.clear(); selected=0; list.addAll(cars);
                           setState(() {
@@ -195,9 +195,9 @@ class _CarTaskState extends State<CarTask> {
       header: GridTileBar(
         backgroundColor: Colors.transparent,
         title: RichText(
-            text: TextSpan(text: "${list[index].name} ", style: TextStyle(fontSize: 20),
+            text: TextSpan(text: "${list[index].name} ", style: const TextStyle(fontSize: 20),
               children: [
-                TextSpan(text: "${list[index].type}", style: TextStyle(color: Colors.red),),
+                TextSpan(text: list[index].type, style: const TextStyle(color: Colors.red),),
               ]
             )),
         trailing: isItemSelected ? Icon(list[index].isSelected==index.toString()?Icons.done:Icons.add)
@@ -205,7 +205,7 @@ class _CarTaskState extends State<CarTask> {
             onPressed: () {
               setState(() {shoppinglist.add(list[index]);_count++;});
              },
-            icon: Icon(Icons.add_shopping_cart_outlined )),
+            icon: const Icon(Icons.add_shopping_cart_outlined )),
       ),
       /// #footer gridtilebar
       footer: GridTileBar(

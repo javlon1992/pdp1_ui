@@ -27,7 +27,7 @@ class _TaskUiState extends State<TaskUi> {
         ),
         context: context,
         builder: (context) {
-          return GetStartedPage();
+          return const GetStartedPage();
         });
   }
 
@@ -38,7 +38,7 @@ class _TaskUiState extends State<TaskUi> {
         isScrollControlled: true,
         context: context,
         builder: (context) {
-          return SignInPage();
+          return const SignInPage();
         });
   }
 

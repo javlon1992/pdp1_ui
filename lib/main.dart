@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:pdp1_ui/pages/Intro_Page.dart';
+import 'package:pdp1_ui/pages/amazon_ui.dart';
 import 'package:pdp1_ui/pages/app_bar.dart';
 import 'package:pdp1_ui/pages/apple_products.dart';
 import 'package:pdp1_ui/pages/car_task.dart';
 import 'package:pdp1_ui/pages/home_page.dart';
 import 'package:pdp1_ui/pages/hotel_task.dart';
+import 'package:pdp1_ui/pages/party_ui.dart';
 import 'package:pdp1_ui/pages/task_ui.dart';
 import 'boshqa_rang.dart';
 
@@ -24,7 +26,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const HotelPage(),
+      home: const AmazonUi(),
       routes: {
         HomePage.id:(context)=>const HomePage(),
         BoshqaRang.id:(context)=>const BoshqaRang(),
@@ -34,6 +36,8 @@ class MyApp extends StatelessWidget {
         TaskUi.id:(context)=>const TaskUi(),
         CarTask.id:(context)=>const CarTask(),
         HotelPage.id:(contex)=>const HotelPage(),
+        PartyPage.id:(contex)=>const PartyPage(),
+        AmazonUi.id:(contex)=>const AmazonUi(),
       },
     );
   }
