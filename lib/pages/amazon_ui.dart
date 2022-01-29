@@ -1,8 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class AmazonUi extends StatefulWidget {
-  static String id="amazon_ui";
+  static String id = "amazon_ui";
+
   const AmazonUi({Key? key}) : super(key: key);
 
   @override
@@ -12,28 +12,39 @@ class AmazonUi extends StatefulWidget {
 class _AmazonUiState extends State<AmazonUi> {
   late Size size = MediaQuery.of(context).size;
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey.shade300,
       appBar: AppBar(
+        leading: Builder(
+          builder: (context) {
+            return IconButton(
+                icon: Icon(Icons.menu,color: Colors.black,),
+              onPressed: () {
+                 Scaffold.of(context).openDrawer();
+              },);
+          }
+        ),
+        backgroundColor: Colors.cyanAccent,
         title: SizedBox(
           //height: kToolbarHeight,
-          child: Image.asset("assets/images/amazon_logo.png",width: 100,fit: BoxFit.cover,),
+          child: Image.asset(
+            "assets/images/amazon_logo.png",color: Colors.black,
+            width: 100,
+            fit: BoxFit.cover,
+          ),
         ),
         elevation: 0,
         toolbarHeight: kToolbarHeight,
         actions: [
-          IconButton(
-              onPressed: (){}, icon: Icon(Icons.mic)),
-          IconButton(
-              onPressed: (){}, icon: Icon(Icons.shopping_cart_rounded)),
+          IconButton(onPressed: () {}, icon: Icon(Icons.mic,color: Colors.black,)),
+          IconButton(onPressed: () {}, icon: Icon(Icons.shopping_cart_rounded,color: Colors.black,)),
         ],
         bottom: PreferredSize(
-          preferredSize: Size(size.width,size.width*0.16),
+          preferredSize: Size(size.width, size.width * 0.16),
           child: Container(
-            margin: const EdgeInsets.only(left: 9,right: 9,bottom: 10),
+            margin: const EdgeInsets.only(left: 9, right: 9, bottom: 10),
             height: 45,
             decoration: BoxDecoration(
               color: Colors.white,
@@ -41,93 +52,114 @@ class _AmazonUiState extends State<AmazonUi> {
             ),
             child: const TextField(
               decoration: InputDecoration(
-                prefixIcon: Icon(Icons.search,color: Colors.blue,),
-                border: InputBorder.none,
-                hintText: "What are you looking for?",
-                suffixIcon: Icon(Icons.camera_alt,color: Colors.blue,)
-              ),
+                  prefixIcon: Icon(
+                    Icons.search,
+                    color: Colors.black,
+                  ),
+                  border: InputBorder.none,
+                  hintText: "What are you looking for?",
+                  suffixIcon: Icon(
+                    Icons.photo_camera_outlined,
+                    color: Colors.black,
+                  )),
             ),
-          ),),
-
+          ),
+        ),
       ),
       drawer: Drawer(),
       body: ListView(
+        addAutomaticKeepAlives:false,   addRepaintBoundaries:false,   addSemanticIndexes:false,
         children: [
           Container(
-            color: Colors.blueGrey,
+            color: Colors.cyanAccent.shade100,
             height: 40,
             child: Row(
               children: [
-                Icon(Icons.location_on,color: Colors.white,),
-                Text("Dilever to Korea,Republic of",style: TextStyle(color: Colors.white),),
+                Icon(Icons.location_on_outlined),
+                Text("Dilever to Uzbekistan"),
+                Icon(Icons.keyboard_arrow_down_outlined),
               ],
             ),
           ),
           Container(
-            width: double.infinity,
-            height: 100,
-            decoration: BoxDecoration(
-              color: Colors.white,
-            ),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            width: size.width,
+            height: 320,
+            child: Stack(
               children: [
                 Container(
-                  height: 100,
-                  width: size.width/2,
+                  width: double.infinity,
+                  height: size.width / 2,
                   decoration: BoxDecoration(
-                      borderRadius: BorderRadius.horizontal(right:Radius.circular(100)),
-                    color: Colors.lightBlueAccent,
-                    image: DecorationImage(
-                      fit: BoxFit.cover,
-                      image: AssetImage("assets/images/image_1.jpeg"),
-                    ),
-                  ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.7),
+                          //spreadRadius: 7,
+                          blurRadius: 8,
+                          offset: Offset(0, 3), // changes position of shadow
+                        ),
+                      ],
+                      image: DecorationImage(
+                        fit: BoxFit.cover,
+                        image: AssetImage("assets/images/item_6.jpeg"),
+                      )),
                 ),
-                Text("We ship 45 million \nproducts",style: TextStyle(fontSize: 15),),
-                SizedBox(),
-              ],
-            ),
-          ),
-          SizedBox(height: 7,),
-          Container(
-            height: 110,
-            color: Colors.white,
-            padding: EdgeInsets.all(10),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Text("Sign in for the best experience"),
-                MaterialButton(
-                  color: Colors.orange,
-                    onPressed: (){},
-                    child: Text("Sign in"),
+                /// #ListView
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Container(
+                      height: 170,
+                      child: ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: 7,
+                        physics: ClampingScrollPhysics(),
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (context, index) {
+                          return horizontalItemList(index);
+                        },
+                      ),
                     ),
-                Text("Create an account",style: TextStyle(color: Colors.blue),),
+                  ],
+                ),
               ],
             ),
           ),
-          SizedBox(height: 7,),
+          SizedBox(
+            height: 7,
+          ),
           Container(
             padding: EdgeInsets.all(10),
             width: double.infinity,
-           //height:  (Orientation.portrait == MediaQuery.of(context).orientation) ?  size.width : size.height,
+            //height:  (Orientation.portrait == MediaQuery.of(context).orientation) ?  size.width : size.height,
             color: Colors.white,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Text("Deal of the Day",style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),),
-                SizedBox(height: 10,),
-                Image.asset("assets/images/item_7.jpeg",fit: BoxFit.cover,),
-                SizedBox(height: 10,),
-                Text("Up to 31% off APC UPS Battery Back \n\$10.99 - \$79.9",style: TextStyle(fontWeight: FontWeight.bold),),
+                Text(
+                  "Deal of the Day",
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Image.asset(
+                  "assets/images/item_7.jpeg",
+                  fit: BoxFit.cover,
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Text(
+                  "Up to 31% off APC UPS Battery Back \n\$10.99 - \$79.9",
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
               ],
             ),
           ),
-          SizedBox(height: 7,),
+          SizedBox(
+            height: 7,
+          ),
           Container(
             //height: size.height*0.7,
             padding: EdgeInsets.all(10),
@@ -136,25 +168,32 @@ class _AmazonUiState extends State<AmazonUi> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Text("Best sellers in Electronics",style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),),
-                SizedBox(height: 10,),
+                Text(
+                  "Best sellers in Electronics",
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
                 GridView.builder(
-                  itemCount: 4,
-                  shrinkWrap: true,
+                    itemCount: 4,
+                    shrinkWrap: true,
                     physics: NeverScrollableScrollPhysics(),
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      mainAxisSpacing: 7,
+                        mainAxisSpacing: 7,
                         crossAxisSpacing: 7,
-                        crossAxisCount: 2
-                    ),
-                    itemBuilder: (context,index){
-                      return Image.asset("assets/images/item_${index+1}.jpeg",);
-                    }
-                ),
+                        crossAxisCount: 2),
+                    itemBuilder: (context, index) {
+                      return Image.asset(
+                        "assets/images/item_${index + 1}.jpeg",
+                      );
+                    }),
               ],
             ),
           ),
-          SizedBox(height: 7,),
+          SizedBox(
+            height: 7,
+          ),
           Container(
             width: size.width,
             color: Colors.white,
@@ -162,10 +201,20 @@ class _AmazonUiState extends State<AmazonUi> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Text("Top products in Camera",style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),),
-                SizedBox(height: 10,),
-                Image.asset("assets/images/item_3.jpeg",fit: BoxFit.cover,),
-                SizedBox(height: 7,),
+                Text(
+                  "Top products in Camera",
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Image.asset(
+                  "assets/images/item_3.jpeg",
+                  fit: BoxFit.cover,
+                ),
+                SizedBox(
+                  height: 7,
+                ),
                 GridView.builder(
                     itemCount: 2,
                     shrinkWrap: true,
@@ -175,14 +224,67 @@ class _AmazonUiState extends State<AmazonUi> {
                       crossAxisSpacing: 7,
                       crossAxisCount: 2,
                     ),
-                    itemBuilder: (context,index){
-                      return Image.asset("assets/images/item_${index+1}.jpeg",);
-                    }
-                ),
+                    itemBuilder: (context, index) {
+                      return Image.asset(
+                        "assets/images/item_${index + 1}.jpeg",
+                      );
+                    }),
               ],
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget horizontalItemList(int index) {
+    return Container(
+      width: 130,
+      height: 170,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+      ),
+      padding: EdgeInsets.only(left: 7),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(5),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Container(
+              height: 40,
+              padding: EdgeInsets.all(5),
+              color: Colors.white,
+              child: Text(
+                "Beauty \nPicks",
+                style: TextStyle(fontSize: 13),
+              ),
+            ),
+            Container(
+              height: 130,
+              padding: EdgeInsets.symmetric(horizontal: 4),
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage("assets/images/item_${index + 1}.jpeg"),
+                  fit: BoxFit.cover,
+                ),
+              ),
+              child: Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      Colors.black.withOpacity(0.2),
+                      Colors.black.withOpacity(0.1),
+                      Colors.black.withOpacity(0.1),
+                      Colors.black.withOpacity(0.01),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
