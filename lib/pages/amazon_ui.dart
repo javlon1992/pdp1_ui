@@ -182,7 +182,7 @@ class _AmazonUiState extends State<AmazonUi> {
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         mainAxisSpacing: 7,
                         crossAxisSpacing: 7,
-                        crossAxisCount: 2),
+                        crossAxisCount: 2,),
                     itemBuilder: (context, index) {
                       return Image.asset(
                         "assets/images/item_${index + 1}.jpeg",

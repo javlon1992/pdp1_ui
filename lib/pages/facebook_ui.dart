@@ -18,7 +18,7 @@ class _FacebookUIState extends State<FacebookUI> {
       appBar: AppBar(
         elevation: 0,
         backgroundColor:theme? Colors.black: Colors.white,
-        title: Text("facebook",style: TextStyle(color: Colors.blue),),
+        title: Text("facebook",style: TextStyle(color: Colors.blue),overflow: TextOverflow.ellipsis,),
         actions: [
           IconButton(icon: Icon(Icons.search,color:theme? Colors.white :Colors.black,), onPressed: () {  },),
           IconButton(icon: Icon(Icons.camera_alt,color:theme? Colors.white : Colors.black,),
@@ -38,6 +38,7 @@ class _FacebookUIState extends State<FacebookUI> {
           ),
           /// #Icons
           Container(
+            height: 50,
             color:theme? Colors.black : Colors.white,
             child: buildIcons(),
           ),
@@ -100,37 +101,41 @@ class _FacebookUIState extends State<FacebookUI> {
           );
   }
 
-  Row buildIcons() {
+  Widget buildIcons() {
     return Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              ElevatedButton.icon(
-                icon: Icon(Icons.video_call,color: Colors.red,),
-                label: Text("Live"),
-                onPressed: () => print("it's pressed"),
-                style: ElevatedButton.styleFrom(
-                  elevation: 0,
-                  primary: Colors.transparent,
-                  onPrimary: Colors.grey,
-                  // shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(32.0),),
+              Expanded(
+                child: ElevatedButton.icon(
+                  icon: Icon(Icons.video_call,color: Colors.red,),
+                  label: Text("Live"),
+                  onPressed: () => print("it's pressed"),
+                  style: ElevatedButton.styleFrom(
+                    elevation: 0,
+                    primary: Colors.transparent,
+                    onPrimary: Colors.grey,
+                    // shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(32.0),),
+                  ),
                 ),
               ),
-              VerticalDivider(thickness: 1,width: 1,),
-              ElevatedButton.icon(
-                icon: Icon(Icons.photo,color: Colors.green,),
-                label: Text("Photo"),
-                onPressed: () => print("it's pressed"),
-                style: ElevatedButton.styleFrom(
-                  elevation: 0,
-                  primary: Colors.transparent,
-                  onPrimary: Colors.grey,
-                  // shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(32.0),),
+              VerticalDivider(endIndent: 7, indent: 7,thickness: 1,color: Colors.grey.shade300,),
+              Expanded(
+                child: ElevatedButton.icon(
+                  icon: Icon(Icons.photo,color: Colors.green,),
+                  label: Text("Photo"),
+                  onPressed: () => print("it's pressed"),
+                  style: ElevatedButton.styleFrom(
+                    elevation: 0,
+                    primary: Colors.transparent,
+                    onPrimary: Colors.grey,
+                    // shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(32.0),),
+                  ),
                 ),
               ),
-              VerticalDivider(thickness: 1,color: Colors.grey,),
+              VerticalDivider(thickness: 1,endIndent: 7, indent: 7,color: Colors.grey.shade300,),
               ElevatedButton.icon(
                 icon: Icon(Icons.location_on,color: Colors.red,),
-                label: Text("Check in"),
+                label: Text("Check in",),
                 onPressed: () => print("it's pressed"),
                 style: ElevatedButton.styleFrom(
                   elevation: 0,
