@@ -169,8 +169,7 @@ class _HomePageState extends State<HomePage> {
                             return  (list[index][0]=="#") ?
                             TextSpan(
                                 text: list[index],
-                                style: const TextStyle(
-                                    color: Colors.blueAccent, fontWeight: FontWeight.bold),
+                                style: const TextStyle(color: Colors.blueAccent, fontWeight: FontWeight.bold),
                                 recognizer: TapGestureRecognizer()
                                   ..onTap = () {fireToast("Hash teg ${list[index]}");})
 

@@ -5,6 +5,7 @@ import 'package:pdp1_ui/pages/amazon_ui.dart';
 import 'package:pdp1_ui/pages/app_bar.dart';
 import 'package:pdp1_ui/pages/apple_products.dart';
 import 'package:pdp1_ui/pages/car_task.dart';
+import 'package:pdp1_ui/pages/compas.dart';
 import 'package:pdp1_ui/pages/facebook_ui.dart';
 import 'package:pdp1_ui/pages/home_page.dart';
 import 'package:pdp1_ui/pages/hotel_task.dart';
@@ -13,6 +14,7 @@ import 'package:pdp1_ui/pages/party_ui.dart';
 import 'package:pdp1_ui/pages/pin_code.dart';
 import 'package:pdp1_ui/pages/task_01_02_2022.dart';
 import 'package:pdp1_ui/pages/task_ui.dart';
+import 'package:pdp1_ui/pages/twitter_ui.dart';
 import 'boshqa_rang.dart';
 
 void main() {
@@ -36,7 +38,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: InstagramUI(),
+      home: TwitterUI(),
       routes: {
         HomePage.id:(context)=>const HomePage(),
         BoshqaRang.id:(context)=>const BoshqaRang(),
@@ -52,6 +54,8 @@ class MyApp extends StatelessWidget {
         FacebookUI.id:(context)=>const FacebookUI(),
         InstagramUI.id:(context)=>const InstagramUI(),
         TaskExam.id:(context)=>const TaskExam(),
+        TwitterUI.id:(context)=>const TwitterUI(),
+        Compass.id:(context)=>const Compass(),
       },
     );
   }

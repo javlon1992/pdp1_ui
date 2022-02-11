@@ -52,7 +52,6 @@ class _InstagramUIState extends State<InstagramUI> with SingleTickerProviderStat
         body: DefaultTabController(
           length: 2,
           child: NestedScrollView(
-             physics: NeverScrollableScrollPhysics(),
             headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
               return [
                 // SliverAppBar(
@@ -74,74 +73,72 @@ class _InstagramUIState extends State<InstagramUI> with SingleTickerProviderStat
                 //     ],
                 //   ),
                 // ),
-                SliverAppBar(
-                  backgroundColor: Colors.white,
-                  collapsedHeight: 315,
-                  expandedHeight: 315,
-                  flexibleSpace: buildSliverAppBar(),
-                ),
-                SliverPersistentHeader(
-                  delegate: MyDelegate(
-                      TabBar(
-                        indicatorPadding: EdgeInsets.only(bottom: 2),
-                        tabs: [
-                          Tab(icon: Icon(Icons.grid_on_sharp,color: Colors.black,)),
-                          Tab(icon: Icon(Icons.person_pin_outlined,color: Colors.black,)),
-                        ],
-                        indicatorColor: Colors.black,
-                        unselectedLabelColor: Colors.grey,
-                        labelColor: Colors.black,
-                      )
-                  ),
-                  floating: true,
-                  pinned: true,
-                ),
+                SliverList(delegate: SliverChildListDelegate([
+                  buildSliverAppBar(),
+                ]
+                )),
               ];
             },
-            body: TabBarView(
-              /// #Photos
-              children: [1,2].map((tab) => GridView.builder(
-                  itemCount: 18,
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: (tab==1)? 3 : 1,
-                    mainAxisSpacing: 2,
-                    crossAxisSpacing: 2,
-                    childAspectRatio: (tab==2)? 2/1.3 : 1,
-                  ),
-                  itemBuilder: (context,index){
-                    return Image(
-                        fit: BoxFit.cover,
-                        image: AssetImage((tab==1)?"assets/images/item_${(index%7)+1}.jpeg"
-                                                  :"assets/images/ic_hotel${index%5}.jpg"));
-                  }),).toList(),
-                /// #Photos
-                // GridView.builder(
-                //     itemCount: 15,
-                //     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                //         crossAxisCount: 3,
-                //         mainAxisSpacing: 2,
-                //         crossAxisSpacing: 2,
-                //     ),
-                //     itemBuilder: (context,index){
-                //       return Image(
-                //         fit: BoxFit.cover,
-                //         image: AssetImage("assets/images/img_${index%5}.png"));
-                //     }),
-                /// My photos
-                // GridView.builder(
-                //   itemCount: 10,
-                //     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                //         crossAxisCount: 1,
-                //         mainAxisSpacing: 5,
-                //         crossAxisSpacing: 5,
-                //         childAspectRatio: 2/1.3,
-                //     ),
-                //     itemBuilder: (context,index){
-                //      return Image(
-                //          fit: BoxFit.cover,
-                //          image: AssetImage("assets/images/img_${index%5}.png"));
-                //     }),
+            body: Column(
+              children: [
+                TabBar(
+                  indicatorPadding: EdgeInsets.only(bottom: 2),
+                  tabs: [
+                    Tab(icon: Icon(Icons.grid_on_sharp,color: Colors.black,)),
+                    Tab(icon: Icon(Icons.person_pin_outlined,color: Colors.black,)),
+                  ],
+                  indicatorColor: Colors.black,
+                  unselectedLabelColor: Colors.grey,
+                  labelColor: Colors.black,
+                ),
+                Expanded(
+                  child: TabBarView(
+                    /// #Photos
+                    children: [1,2].map((tab) => GridView.builder(
+                        itemCount: 18,
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: (tab==1)? 3 : 1,
+                          mainAxisSpacing: 2,
+                          crossAxisSpacing: 2,
+                          childAspectRatio: (tab==2)? 2/1.3 : 1,
+                        ),
+                        itemBuilder: (context,index){
+                          return Image(
+                              fit: BoxFit.cover,
+                              image: AssetImage((tab==1)?"assets/images/item_${(index%7)+1}.jpeg"
+                                                        :"assets/images/ic_hotel${index%5}.jpg"));
+                        }),).toList(),
+                      /// #Photos
+                      // GridView.builder(
+                      //     itemCount: 15,
+                      //     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      //         crossAxisCount: 3,
+                      //         mainAxisSpacing: 2,
+                      //         crossAxisSpacing: 2,
+                      //     ),
+                      //     itemBuilder: (context,index){
+                      //       return Image(
+                      //         fit: BoxFit.cover,
+                      //         image: AssetImage("assets/images/img_${index%5}.png"));
+                      //     }),
+                      /// My photos
+                      // GridView.builder(
+                      //   itemCount: 10,
+                      //     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      //         crossAxisCount: 1,
+                      //         mainAxisSpacing: 5,
+                      //         crossAxisSpacing: 5,
+                      //         childAspectRatio: 2/1.3,
+                      //     ),
+                      //     itemBuilder: (context,index){
+                      //      return Image(
+                      //          fit: BoxFit.cover,
+                      //          image: AssetImage("assets/images/img_${index%5}.png"));
+                      //     }),
 
+                  ),
+                ),
+              ],
             ),
           ),
         ));
@@ -261,26 +258,25 @@ class _InstagramUIState extends State<InstagramUI> with SingleTickerProviderStat
   }
 }
 
-class MyDelegate extends SliverPersistentHeaderDelegate{
-  final TabBar tabBar;
-  MyDelegate(this.tabBar);
-
-  @override
-  Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
-    return Container(color: Colors.white,
-      child: tabBar,
-    );
-  }
-
-  @override
-  double get maxExtent => tabBar.preferredSize.height;
-
-  @override
-  double get minExtent => tabBar.preferredSize.height;
-
-  @override
-  bool shouldRebuild(SliverPersistentHeaderDelegate oldDelegate) {
-    return false;
-  }
-
-}
+// class MyDelegate extends SliverPersistentHeaderDelegate{
+//   final TabBar tabBar;
+//   MyDelegate(this.tabBar);
+//
+//   @override
+//   Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
+//     return Container(color: Colors.white,
+//       child: tabBar,
+//     );
+//   }
+//
+//   @override
+//   double get maxExtent => tabBar.preferredSize.height;
+//
+//   @override
+//   double get minExtent => tabBar.preferredSize.height;
+//
+//   @override
+//   bool shouldRebuild(SliverPersistentHeaderDelegate oldDelegate) {
+//     return false;
+//   }
+//}
